@@ -1,7 +1,39 @@
-import React from 'react'
+import React,{ useState,useEffect} from 'react'
+
 
 const Card = ({doctorInfo}) => {
+    const [loading1,setLoading1] = useState(false)
+    const [locationName,setLocation] = useState("")
+    const [loading2,setLoading2] = useState(false)
+    const [specializationName,setSpecializationName] = useState("")
+
+    // const fetchLocationName = async () => {
+    //     setLoading1(true)
+    //    let response = await fetch("http://localhost:5000/locations/"+doctorInfo.locationId)
+    //         response = await response.json();
+    //    console.log(response)
+    // setLocationName(response)
+    //    setLoading1(false)
+
+    // }
+    const fetchSpecializationName = async () => {
+        setLoading2(true)
+       let response = await fetch("http://localhost:5000/specializations/"+doctorInfo.specializationId)
+            response = await response.json();
+       console.log(response)
+       setSpecializationName(response.name)
+       setLoading2(false)
+
+    }
+    useEffect(() => {
+         fetchSpecializationName()
+        //  fetchLocationName()
+    }, [])
     return (
+        <>
+        {
+            
+            loading2 ?<h1>Loading...</h1>:
         <div className="shadow-md bg-white rounded-sm">
            <div className="flex justify-between px-5 py-4 flex-wrap gap-20 ">
                <div className="flex gap-4 items-center">
@@ -11,7 +43,7 @@ const Card = ({doctorInfo}) => {
     <div className="mt-1 space-y-.5 text-textDark text-sm">
     <h4>{doctorInfo.experience} years experience</h4>
     <h4>{doctorInfo.degree}</h4>
-    <h4>{doctorInfo.specialization}</h4>
+    <h4>{specializationName}</h4>
     </div>
 
 </div>
@@ -30,6 +62,8 @@ const Card = ({doctorInfo}) => {
             </button>
            </div>
         </div>
+        }
+        </>
     )
 }
 
