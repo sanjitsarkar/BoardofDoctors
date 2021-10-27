@@ -24,7 +24,7 @@ const getAllSpecializations = async (req, res) => {
 const getSpecialization = async (req, res) => {
   try {
     const { id } = req.params;
-    const response = await Specialization.find({ _id: id });
+    const response = await Specialization.findOne({ _id: id });
     res.json(response);
   } catch (err) {
     res

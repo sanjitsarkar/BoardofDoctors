@@ -20,7 +20,7 @@ const Card = ({doctorInfo}) => {
         setLoading2(true)
        let response = await fetch("http://localhost:5000/specializations/"+doctorInfo.specializationId)
             response = await response.json();
-       console.log(response)
+       console.log("spec",response)
        setSpecializationName(response.name)
        setLoading2(false)
 
@@ -28,12 +28,12 @@ const Card = ({doctorInfo}) => {
     useEffect(() => {
          fetchSpecializationName()
         //  fetchLocationName()
-    }, [])
+    }, [doctorInfo])
     return (
         <>
         {
             
-            loading2 ?<h1>Loading...</h1>:
+            loading2 && specializationName?<h1>Loading...</h1>:
         <div className="shadow-md bg-white rounded-sm">
            <div className="flex justify-between px-5 py-4 flex-wrap gap-20 ">
                <div className="flex gap-4 items-center">
